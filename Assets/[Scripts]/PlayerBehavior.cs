@@ -5,6 +5,8 @@ using UnityEngine;
 public class PlayerBehavior : MonoBehaviour
 {
     public float speed = 10.0f;
+    public Boundary boundary;
+    public float verticalPosition = -4.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -15,11 +17,15 @@ public class PlayerBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float x = Input.GetAxisRaw("Horizontal") * Time.deltaTime * speed;
-        float y = Input.GetAxisRaw("Vertical") * Time.deltaTime * speed;
-
-
-        transform.position += new Vector3(x, y);
+        Move();
 
     }
+
+    void Move()
+    {
+        float x = Input.GetAxisRaw("Horizontal") * Time.deltaTime * speed;
+        transform.position = new Vector2(Mathf.Clamp(transform.position.x, boundary.min, boundary.max), verticalPosition);
+        //transform.position += new Vector3(x, 0);
+    }
+
 }
